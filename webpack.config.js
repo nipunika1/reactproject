@@ -1,4 +1,4 @@
-var newwebpack=require('webpack');
+var webpack=require('webpack');
 var path=require('path');
 
 module.exports={
@@ -11,7 +11,7 @@ module.exports={
         jquery:'jQuery'
     },
     plugins:[
-        newwebpack.ProvidePlugin({
+       new webpack.ProvidePlugin({
             '$':'jquery',
             'jQuery':'jquery'
         })
@@ -31,9 +31,10 @@ resolve:{
     ],
     alias:{
         applicationStyles:'app/styles/app.scss'
-    },
+    }
+   },
     module :{
-        loaders: [
+        rules: [
             {
                 loader:'babel-loader',
                 query:{
@@ -43,13 +44,18 @@ resolve:{
                 exclude: /(node_modules|bower_components)/
             }
         ]
-    }
-},
-sassLoader:{
+    },
+plugins:[
+new webpack.LoaderOptionsPlugin({
+    options: {
+    sassLoader:{
     includePaths:[
         path.resolve(__dirname, './node_modules/foundation-sites/scss')
     
     ]
-},
+}
+}
+})
+],
 devtool:'cheap-module-eval-source-map'
 };    
